@@ -7,7 +7,7 @@ import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns'
 import './Header.css'
 
-const Header = () => {
+const Header = ({type}) => {
     const [openDate, setOpenDate] = useState(false)
     const [date, setDate] = useState([
         {
@@ -22,19 +22,19 @@ const Header = () => {
         adult: 1,
         children: 0,
         room: 1,
-    })
+    });
 
     const handleOption = (name, operation) => {
-        setOptions(prev => {
+        setOptions((prev) => {
             return {
                 ...prev, [name]: operation === 'i' ?
                     options[name] + 1 : options[name] - 1,
-            }
-        })
-    }
+            };
+        });
+    };
     return (
         <div className='header'>
-            <div className="hcontainer">
+            <div className={type === 'list' ? 'hcontainer listMode' : 'hcontainer'}>
                 <div className="headerList">
                     <div className="headerItem active">
                         <FontAwesomeIcon icon={faBed} />
@@ -57,7 +57,9 @@ const Header = () => {
                         <span>Airport taxis</span>
                     </div>
                 </div>
-                <h1 className='htitle'>
+                {  type !== 'list' &&
+                    <>
+                    <h1 className='htitle'>
                     A lifetime of Discounts? It's genius
                 </h1>
                 <p className='hdesc'>
@@ -134,13 +136,13 @@ const Header = () => {
                                     <button className="count-btn" onClick={() => handleOption('room', 'i')}>+</button>
                                 </div>
                             </div>
-                        </div>
+                        </div>}
                     </div>
 
                     <div className='search-item'>
                         <button className="hbtn">Search</button>
                     </div>
-                </div>
+                </div></>}
             </div>
 
         </div>
